@@ -3,9 +3,6 @@ const app = express();
 const cors = require('cors');
 const bodyParser = require('body-parser');
 const {ConnectDb,getDb}=require('./DB')
-const jwt = require('jsonwebtoken');
-const multer = require('multer');
-const cookieParser = require('cookie-parser')
 const { ObjectId } = require('mongodb');
 const https = require('https');
 const Register = require('./routes/Register/Register')
@@ -18,10 +15,12 @@ const deleteProduct = require('./routes/deleteProduct/deleteProduct')
 const addOrder = require('./routes/addOrder/addOrder')
 const getUserOrders = require('./routes/getUserOrders/getUserOrders')
 const Checkout = require('./routes/Checkout/Checkout')
+const limiter = require('./routes/rateLimiter/limiter')
 require('dotenv').config()
 
 app.use(express.json())
 app.use(cookieParser())
+app.use(limiter)
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(cors({ origin:'http://localhost:3000',credentials:true}))
 app.options('*', cors({ origin: 'http://localhost:3000', credentials: true }));
