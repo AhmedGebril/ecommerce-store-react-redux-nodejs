@@ -1,0 +1,84 @@
+*{
+  box-sizing: border-box;
+}
+body {
+  margin: 0;
+  padding: 0;
+  background-color: #D4FAFC !important;
+}
+.signin-back{
+  position:absolute;
+  top:30%;
+  left:10px;
+}
+.signinForm{
+  position:relative;
+}
+.menu {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  width: 3%;
+  background-color: #fff;
+  position: fixed;
+  top: 0;
+  left: -200px;
+  transition: all 0.3s ease-in-out;
+  background-color: black;
+  margin: 0;
+  padding: 0;
+}
+
+.menu.open {
+  left: 0;
+  margin: 0;
+}
+
+.menu li {
+  margin: 20px 0;
+  list-style: none;
+  display: flex; /* Added */
+  align-items: center; /* Added */
+}
+
+.menu a {
+  font-size: 24px;
+  color: #333;
+  text-decoration: none;
+}
+
+.menu a:hover {
+  color: #f00;
+}
+
+.menu .fa {
+  display: block;
+}
+
+.menu-btn {
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  font-size: 24px;
+  color: #333;
+  text-decoration: none;
+  z-index: 999;
+}
+.close-mark{
+  position:absolute;
+  top: 5px;
+  right: 5px;
+  cursor: pointer;
+}
+.card-image{
+  transition: 0.6s;
+}
+.card-image:hover{
+transform: scale(0.8);
+}
+.google-btn{
+  margin-bottom:3px; 
+  margin-right:5px;
+}
