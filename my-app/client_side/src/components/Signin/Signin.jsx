@@ -47,7 +47,6 @@ export default function Signin() {
   async function getProfile(){
     await axios.get(`https://www.googleapis.com/oauth2/v1/userinfo?access_token=${user.access_token}`).then(async (res) => {
       await axios.get(`http://localhost:3001/generate-token?username=${res.data.name}`,{withCredentials:true}).then(res=>{
-        console.log(res.data)
         dispatch(setName(res.data.username))
         navigate('/',{replace:true})
       })

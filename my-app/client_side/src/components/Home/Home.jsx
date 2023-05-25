@@ -86,6 +86,7 @@ export default function HomePage() {
             dispatch(increment())
         })
         .catch((err) => {
+          console.log(err)
           // add popup that tells the error message
           setError(err.response.data.error)
           if(err.response.status == 401){

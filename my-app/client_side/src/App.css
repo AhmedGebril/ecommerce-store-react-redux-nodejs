@@ -82,3 +82,6 @@ transform: scale(0.8);
   margin-bottom:3px; 
   margin-right:5px;
 }
+.order-summary{
+  border-left: 1px solid #ccc !important;
+}

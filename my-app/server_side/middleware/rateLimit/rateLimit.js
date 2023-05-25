@@ -6,7 +6,6 @@ function getRateLimit(req, res, next) {
     max: 100, 
     message: 'Too many requests from this IP, please try again later',
   })
-  console.log('here')
   limiter(req, res, next)
 }
 

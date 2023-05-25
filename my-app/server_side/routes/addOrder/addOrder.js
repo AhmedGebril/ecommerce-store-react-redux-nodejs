@@ -5,35 +5,42 @@ async function addOrder(req,res,db){
 
      // Extract the parameters from req.body
      const { productId, quantity } = req.body.order;
-  
      // Verify and extract the user_id from the token in the cookie
      const token = req.cookies.token;
      const guest_token = req.cookies.gToken
      let decoded;
      let userId;
      let existingOrder; 
- 
+
      if(token){
          try {
            decoded = jwt.verify(token, 'ahmedbob4');
+           userId = decoded.user_id;
          } catch (err) {
            // Handle JWT token decoding error
            return res.status(401).json({ error: 'Failed to decode token' });
          }
      }else if(guest_token){
          try {
+
            decoded = jwt.verify(guest_token, 'ahmedbob4');
-           userId = decoded.user_id;
+           userId = decoded;
+           console.log(userId);
          } catch (err) {
            // Handle JWT token decoding error
            return res.status(401).json({ error: 'Failed to decode token' });
          }
      }
-     const fuser_id = new ObjectId(decoded.user_id); // Correct usage of ObjectId
- 
+     const fuser_id = new ObjectId(decoded.user_id); 
+
      // Check if the product already exists in the orders collection for the given user
-     if(userId){
-         existingOrder = await db.collection('orders').findOne({ user: fuser_id, product: new ObjectId(productId) });
+     if(userId.username){
+      console.log('guest')
+      existingOrder = await db.collection('orders').findOne({ guest_username: decoded.username, product: new ObjectId(productId) });
+     }
+     else if(userId.user_id){
+      console.log('user')
+      existingOrder = await db.collection('orders').findOne({ user: fuser_id, product: new ObjectId(productId) });
      }
      const product = await db.collection('products').findOne({ _id: new ObjectId(productId) });
    
@@ -52,7 +59,6 @@ async function addOrder(req,res,db){
          } else {
              let order
              if(guest_token){
-                 console.log(decoded)
                   order = {
                      product: new ObjectId(productId),
                      quantity: parseInt(quantity),

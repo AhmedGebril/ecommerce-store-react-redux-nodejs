@@ -15,11 +15,15 @@ const deleteProduct = require('./routes/deleteProduct/deleteProduct')
 const addOrder = require('./routes/addOrder/addOrder')
 const getUserOrders = require('./routes/getUserOrders/getUserOrders')
 const Checkout = require('./routes/Checkout/Checkout')
+const cookieParser = require('cookie-parser');
 const limiter = require('./middleware/rateLimit/rateLimit')
+const ShippingDetails = require('./routes/addShippingAddress/Shippingaddress')
+const getUserShippingAddress = require('./routes/getUserShippingAddress/userShippingAddress')
 require('dotenv').config()
 
 app.use(express.json())
 app.use(limiter)
+app.use(cookieParser());
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(cors({ origin:'http://localhost:3000',credentials:true}))
 app.options('*', cors({ origin: 'http://localhost:3000', credentials: true }));
@@ -41,6 +45,7 @@ ConnectDb((err) => {
 // Register
 app.post('/Register', (req, res) => {
    Register(req, res,db)
+
 })
 // sign in
 app.post('/Signin',(req,res)=>{
@@ -131,4 +136,13 @@ app.delete('/delete/orderItem', async (req, res) =>{
     }).catch(err =>{
         res.status(500).json(err)
     })
+})
+
+// handles adding the  shipping  address to the user  
+app.post('/save/ShippingDetails',async (req, res) =>{
+    ShippingDetails(req,res,db)
+})
+
+app.get('/getUserShippingAddress',async (req,res)=>{
+    getUserShippingAddress(req,res,db)
 })
